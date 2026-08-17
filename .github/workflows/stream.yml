@@ -1,0 +1,25 @@
+name: Kick to Restream Bot
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */3 * * *' # يعمل تلقائياً كل 3 ساعات أو اضغط تشغيل يدوي
+
+jobs:
+  run-stream:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python & Streamlink/FFmpeg
+        run: |
+          sudo apt update
+          sudo apt install -y ffmpeg python3-pip
+          pip3 install streamlink
+
+      - name: Start Broadcasting
+        run: |
+          chmod +x stream.sh
+          ./stream.sh

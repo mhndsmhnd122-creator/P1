@@ -1,25 +1,35 @@
-name: Kick to Restream Bot
+name: Kick to Restream Auto-Monitor
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 */3 * * *' # يعمل تلقائياً كل 3 ساعات أو اضغط تشغيل يدوي
 
 jobs:
-  run-stream:
+  keep-streaming:
     runs-on: ubuntu-latest
+    timeout-minutes: 360
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python & Streamlink/FFmpeg
+      - name: Set up Environment
         run: |
           sudo apt update
           sudo apt install -y ffmpeg python3-pip
-          pip3 install streamlink
+          pip3 install --upgrade --force-reinstall git+https://github.com/streamlink/streamlink.git
 
-      - name: Start Broadcasting
+      - name: Continuous Stream Monitor & Broadcaster
         run: |
           chmod +x stream.sh
-          ./stream.sh
+          echo "تم تفعيل نظام المراقبة التلقائية لقناة (id7o)..."
+          
+          while true; do
+            if streamlink "https://kick.com/id7o" > /dev/null 2>&1; then
+              echo "تم رصد البث المباشر الآن! جاري نقل البث برستريم..."
+              ./stream.sh
+              echo "توقف البث، جاري إعادة تفعيل الرادار..."
+            else
+              echo "القناة غير مبثّة حالياً... يتم إعادة الفحص خلال 30 ثانية..."
+            fi
+            sleep 30
+          done

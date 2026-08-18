@@ -16,10 +16,10 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y ffmpeg python3-pip
+          pip3 install --upgrade pip
           pip3 install --upgrade --force-reinstall git+https://github.com/streamlink/streamlink.git
 
-      - name: Start Stream Immediately
+      - name: Start Continuous Monitor & Stream
         run: |
           chmod +x stream.sh
-          # تشغيل السكريبت مباشرة بدون فحص
           ./stream.sh

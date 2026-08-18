@@ -18,18 +18,8 @@ jobs:
           sudo apt install -y ffmpeg python3-pip
           pip3 install --upgrade --force-reinstall git+https://github.com/streamlink/streamlink.git
 
-      - name: Continuous Stream Monitor & Broadcaster
+      - name: Start Stream Immediately
         run: |
           chmod +x stream.sh
-          echo "تم تفعيل نظام المراقبة التلقائية لقناة (id7o)..."
-          
-          while true; do
-            if streamlink "https://kick.com/id7o" > /dev/null 2>&1; then
-              echo "تم رصد البث المباشر الآن! جاري نقل البث برستريم..."
-              ./stream.sh
-              echo "توقف البث، جاري إعادة تفعيل الرادار..."
-            else
-              echo "القناة غير مبثّة حالياً... يتم إعادة الفحص خلال 30 ثانية..."
-            fi
-            sleep 30
-          done
+          # تشغيل السكريبت مباشرة بدون فحص
+          ./stream.sh

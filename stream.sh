@@ -1,6 +1,6 @@
 #!/bin/bash
 
-KICK_URL="https://kick.com/id7o"
+KICK_URL="https://kick.com/OSAMAH"
 RESTREAM_KEY="re_11725544_event1f24e3174647428d86fc1329252bbf36"
 RTMP_URL="rtmp://live.restream.io/live/$RESTREAM_KEY"
 

@@ -1,25 +1,16 @@
-name: Kick to Restream Auto-Monitor
+name: Stream to YouTube
 
 on:
   workflow_dispatch:
 
 jobs:
-  keep-streaming:
+  stream:
     runs-on: ubuntu-latest
-    timeout-minutes: 360
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Install FFmpeg
+        run: sudo apt install ffmpeg -y
 
-      - name: Set up Environment
+      - name: Start Streaming
         run: |
-          sudo apt update
-          sudo apt install -y ffmpeg python3-pip
-          pip3 install --upgrade pip
-          pip3 install --upgrade --force-reinstall git+https://github.com/streamlink/streamlink.git
-
-      - name: Start Continuous Monitor & Stream
-        run: |
-          chmod +x stream.sh
-          ./stream.sh
+          ffmpeg -re -i "رابط_البث_M3U8_هنا" \
+          -c:v copy -c:a copy -f flv "rtmp://a.rtmp.youtube.com/live2/مفتاح_البث_الخاص_بك"
